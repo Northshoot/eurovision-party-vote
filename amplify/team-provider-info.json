@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-eurovisionpartyvote-dev-49097-authRole",
+      "UnauthRoleArn": "arn:aws:iam::654654188847:role/amplify-eurovisionpartyvote-dev-49097-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::654654188847:role/amplify-eurovisionpartyvote-dev-49097-authRole",
+      "Region": "us-west-1",
+      "DeploymentBucketName": "amplify-eurovisionpartyvote-dev-49097-deployment",
+      "UnauthRoleName": "amplify-eurovisionpartyvote-dev-49097-unauthRole",
+      "StackName": "amplify-eurovisionpartyvote-dev-49097",
+      "StackId": "arn:aws:cloudformation:us-west-1:654654188847:stack/amplify-eurovisionpartyvote-dev-49097/5294df10-0be1-11ef-bbcf-065ce34af205",
+      "AmplifyAppId": "d2egqajlqlsfzs"
+    }
+  }
+}
