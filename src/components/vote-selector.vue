@@ -1,24 +1,30 @@
 <template>
   <div class="vote-selector">
-    <select v-model="selectedVote" @change="handleVote">
-      <option disabled value="">Please select a vote</option>
-      <option v-for="vote in availableVotes" :key="vote" :value="vote">
-        {{ vote }}
-      </option>
-    </select>
-    <p v-if="selectedVote">You voted: {{ selectedVote }}</p>
+    <div class="vote-interface">
+      <p v-if="myVote" class="vote-result"><span class="vote-badge">{{ myVote }}</span></p>
+      <select v-model="selectedVote" @change="handleVote">
+        <option disabled value="">Please select a vote</option>
+        <option v-for="vote in availableVotes" :key="vote" :value="vote">
+          {{ vote }}
+        </option>
+      </select>
+      <button v-if="myVote" @click="removeVote" class="remove-vote-button">
+        <span aria-hidden="true">&times;</span> <!-- Unicode X character -->
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'VoteSelector',
   props: ['country'],
   data() {
     return {
-      selectedVote: null // Local component state to track selected vote
+      selectedVote: '', // Initialize the local state for selected votes
+      myVote: null
     };
   },
   computed: {
@@ -28,20 +34,89 @@ export default {
   },
   methods: {
     handleVote() {
-      this.$emit('vote-selected', { country: this.country, points: this.selectedVote });
-      this.castVote(this.selectedVote); // Cast vote using Vuex action
-      this.selectedVote = null; // Reset after voting
+      // Ensure that the selected vote is set in both the local and global state
+
+      console.log('Vote selected:', this.selectedVote);
+      if(this.myVote !== this.selectedVote) {
+        console.log('New vote selected');
+        this.$store.dispatch('removeVote', this.myVote);
+      }
+      this.myVote = this.selectedVote;
+      this.$emit('vote-selected', {country: this.country, points: this.selectedVote});
+      // Dispatch the vote to the Vuex store
+      this.$store.dispatch('castVote', this.selectedVote);
+      // Optionally reset after emitting or keep for display purposes
     },
-    ...mapActions(['castVote']) // Map Vuex actions
+    removeVote() {
+      this.$store.dispatch('removeVote', this.myVote);
+      this.myVote = null
+      this.selectedVote = ''; // Reset the selected vote
+    }
   }
 };
-
 </script>
 
 <style scoped>
+.vote-selector {
+  display: flex;
+  align-items: center;
+}
+
+.vote-interface {
+  display: flex;
+  align-items: center;
+}
+
 .vote-selector select {
   width: 200px;
   padding: 8px;
-  margin-top: 10px;
+  margin-left: 10px; /* Space between the vote result and select box */
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.vote-result {
+  margin: 0;
+  padding-right: 10px;
+  color: #555;
+  font-style: italic;
+}
+
+.vote-badge {
+  display: inline-block;
+  background-color: #007bff; /* Example: Bright blue background */
+  color: white; /* White text color */
+  padding: 5px 10px; /* Top/bottom and left/right padding */
+  text-align: center;
+  border-radius: 50%; /* This creates the circular shape */
+  min-width: 35px; /* Minimum width to ensure circle shape */
+  font-weight: bold; /* Bold text */
+}
+
+/* Extra styles for select focus and disabled state */
+.vote-selector select:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.vote-selector select:disabled {
+  background-color: #eee;
+}
+.remove-vote-button {
+  padding: 2px 6px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  color: #dc3545; /* Red color for the X to indicate removal/cancel */
+}
+
+.remove-vote-button:hover {
+  color: #c82333; /* Darker red on hover */
 }
 </style>
+
