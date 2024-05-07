@@ -6,28 +6,36 @@
         {{ vote }}
       </option>
     </select>
+    <p v-if="selectedVote">You voted: {{ selectedVote }}</p>
   </div>
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex';
+
 export default {
+  name: 'VoteSelector',
+  props: ['country'],
   data() {
     return {
-      availableVotes: [12, 10, 8, 7, 6, 5, 4, 3, 2, 1],
-      selectedVote: '',
-      usedVotes: []
+      selectedVote: null // Local component state to track selected vote
     };
+  },
+  computed: {
+    ...mapState({
+      availableVotes: state => state.availableVotes
+    })
   },
   methods: {
     handleVote() {
-      if (this.selectedVote) {
-        this.usedVotes.push(this.selectedVote);
-        this.availableVotes = this.availableVotes.filter(vote => !this.usedVotes.includes(vote));
-        this.selectedVote = ''; // Reset selected vote after handling
-      }
-    }
+      this.$emit('vote-selected', { country: this.country, points: this.selectedVote });
+      this.castVote(this.selectedVote); // Cast vote using Vuex action
+      this.selectedVote = null; // Reset after voting
+    },
+    ...mapActions(['castVote']) // Map Vuex actions
   }
 };
+
 </script>
 
 <style scoped>

@@ -2,21 +2,34 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type Blog @model {
+type Party @model {
   id: ID!
   name: String!
-  posts: [Post] @hasMany
+  isGoing: Boolean!
+  users: [User] @hasMany
+  votes: [Vote] @hasMany(indexName: "byParty", fields: ["id"])
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }
 
-type Post @model {
+type User @model {
   id: ID!
-  title: String!
-  blog: Blog @belongsTo
-  comments: [Comment] @hasMany
+  name: String!
+  partyId: ID! @index(name: "byParty", sortKeyFields: ["id"])
+  party: Party @belongsTo(fields: ["partyId"])
+  votes: [Vote] @hasMany(indexName: "byUser", fields: ["id"])
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }
 
-type Comment @model {
+type Vote @model {
   id: ID!
-  post: Post @belongsTo
-  content: String!
+  userId: ID! @index(name: "byUser", sortKeyFields: ["id"])
+  partyId: ID! @index(name: "byParty", sortKeyFields: ["id"])
+  user: User @belongsTo(fields: ["userId"])
+  party: Party @belongsTo(fields: ["partyId"])
+  country: String!
+  points: Int!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }

@@ -10,6 +10,11 @@
       "StackName": "amplify-eurovisionpartyvote-dev-49097",
       "StackId": "arn:aws:cloudformation:us-west-1:654654188847:stack/amplify-eurovisionpartyvote-dev-49097/5294df10-0be1-11ef-bbcf-065ce34af205",
       "AmplifyAppId": "d2egqajlqlsfzs"
+    },
+    "categories": {
+      "api": {
+        "eurovisionpartyvote": {}
+      }
     }
   }
 }

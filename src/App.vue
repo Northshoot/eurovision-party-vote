@@ -5,39 +5,38 @@
 </template>
 
 <script>
-import {createRouter, createWebHashHistory} from 'vue-router';
-import JoinParty from '@/components/join-party-view.vue';
-import Voting from '@/components/vote-view.vue';
-import Admin from '@/components/admin-view.vue';
-import Results from '@/components/results-view.vue';
+import { Amplify } from 'aws-amplify';
+import { generateClient } from 'aws-amplify/api';
+import config from './amplifyconfiguration.json';
+import router from "@/router/router";
+Amplify.configure(config);
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {path: '/', component: JoinParty},
-    {path: '/voting', component: Voting},
-    {path: '/admin', component: Admin},
-    {path: '/results', component: Results}
-  ]
-});
+const client = generateClient();
 
 export default {
   name: 'App',
-  router
-}
+  client,
+
+  router,
+  mounted() {
+      this.$watch(() => this.$router.currentRoute, (newRoute) => {
+        console.log('Current route:', newRoute.path);
+      }, { immediate: true });
+    }
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Poppins', sans-serif;
-  color: #fff;
-  margin-top: 0;
-  background-color: #1a1a2e;
-  background-image: linear-gradient(315deg, #1a1a2e 0%, #b21f1f 74%);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  //font-family: 'Poppins', sans-serif;
+  //color: #fff;
+  //margin-top: 0;
+  //background-color: #1a1a2e;
+  //background-image: linear-gradient(315deg, #1a1a2e 0%, #b21f1f 74%);
+  //height: 100vh;
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  //text-align: center;
 }
 </style>

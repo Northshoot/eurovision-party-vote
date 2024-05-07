@@ -17,6 +17,7 @@
 import 'animate.css';
 
 export default {
+  name: 'ResultsView',
   props: {
     results: Array
   },
