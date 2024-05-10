@@ -33,3 +33,9 @@ type Vote @model {
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
 }
+
+type Winner {
+  id: ID!
+  country: String!
+  place: Int!
+}
