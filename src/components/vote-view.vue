@@ -104,9 +104,14 @@ export default {
       const userDataString = localStorage.getItem('userData');
       const userData = JSON.parse(userDataString);
 
-      const votedDataString = localStorage.getItem('votedData');
-      const votedData = JSON.parse(votedDataString);
-      const voted = userData.partyId === votedData.partyId;
+      let voted = false;
+      try {
+        const votedDataString = localStorage.getItem('votedData');
+        const votedData = JSON.parse(votedDataString);
+        voted = userData.partyId === votedData.partyId;
+      } catch (error) {
+        console.error('Error fetching voted data:', error);
+      }
 
       if(voted) {
         this.$refs.alertBox.show("You already voted !");

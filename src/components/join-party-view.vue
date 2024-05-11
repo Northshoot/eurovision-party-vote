@@ -1,7 +1,7 @@
 <template>
   <div class="join-party">
     <input v-model="userName" placeholder="Enter your username" />
-    <input v-model="partyId" placeholder="Enter party ID" />
+    <input v-model="partyId"  type="hidden"/>
     <button @click="joinParty">Join Party</button>
   </div>
 </template>

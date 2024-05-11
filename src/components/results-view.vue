@@ -10,12 +10,14 @@
              backgroundColor: getRandomColor()
            }"></div>
       </div>
-    <h1>Vote Results</h1>
     <div v-if="winner" class="winner">
-      <h2>Winner: {{ winner.country }} with {{ winner.points }} points!</h2>
+      <h2>Party Favorite</h2>
+      <h3> {{ winner.country }} with {{ winner.points }} points!</h3>
+      <h2 v-if="winningCountry">Actual Winner</h2>
+      <h3> {{ winningCountry }}</h3>
     </div>
       <div v-if="winnerGuesses.length" class="flashy-container">
-        <h2>The all knowing:</h2>
+        <h2>Winner pickers</h2>
         <ul>
           <li v-for="name in winnerGuesses" :key="name" class="flashy-item">
             {{ name }}
@@ -24,7 +26,7 @@
       </div>
 
     <div v-if="runnersUp.length" class="runners-up">
-      <h3>Runners Up:</h3>
+      <h3>Local runners Up:</h3>
       <ul>
         <li v-for="(vote, index) in runnersUp" :key="index">
           {{ vote.country }}: {{ vote.points }} points
@@ -56,7 +58,8 @@ export default {
   data() {
     return {
       showConfetti: true,  // Control the display of confetti
-      winnerGuesses: []
+      winnerGuesses: [],
+      winningCountry: ''
     };
   },
   computed: {
@@ -106,6 +109,9 @@ export default {
       const firstPlaceCountries = new Set(
           winners.filter(winner => winner.place === 1).map(winner => winner.country)
       );
+      let [winningCountry] = firstPlaceCountries;
+      console.log('First place countries:', winningCountry);
+      this.winningCountry = winningCountry;
       const topVotes = allVotes.filter(vote =>
           vote.points === 12 && firstPlaceCountries.has(vote.country)
       );
