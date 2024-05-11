@@ -101,7 +101,12 @@ export default {
       }
     },
     async submitVotes() {
-      const voted = localStorage.getItem('voted');
+      const userDataString = localStorage.getItem('userData');
+      const userData = JSON.parse(userDataString);
+
+      const votedDataString = localStorage.getItem('votedData');
+      const votedData = JSON.parse(votedDataString);
+      const voted = userData.partyId === votedData.partyId;
 
       if(voted) {
         this.$refs.alertBox.show("You already voted !");
@@ -155,7 +160,7 @@ export default {
 }
 
 .list-container {
-  max-width: 640px; /* Set the width of the list */
+  max-width: 540px; /* Set the width of the list */
   margin: auto; /* Center the list horizontally */
 }
 

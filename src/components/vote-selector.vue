@@ -65,10 +65,11 @@ export default {
 .vote-interface {
   display: flex;
   align-items: center;
+  width: 200px;
 }
 
 .vote-selector select {
-  width: 200px;
+  width: 100px;
   padding: 8px;
   margin-left: 10px; /* Space between the vote result and select box */
   background-color: #fff;
@@ -92,7 +93,7 @@ export default {
   padding: 5px 10px; /* Top/bottom and left/right padding */
   text-align: center;
   border-radius: 50%; /* This creates the circular shape */
-  min-width: 35px; /* Minimum width to ensure circle shape */
+  min-width: 15px; /* Minimum width to ensure circle shape */
   font-weight: bold; /* Bold text */
 }
 
@@ -106,7 +107,7 @@ export default {
   background-color: #eee;
 }
 .remove-vote-button {
-  padding: 2px 6px;
+  padding-right: 10px;
   background-color: transparent;
   border: none;
   cursor: pointer;
