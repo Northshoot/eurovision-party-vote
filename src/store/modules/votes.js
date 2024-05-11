@@ -34,6 +34,7 @@ const actions =  {
                 }
             });
             console.log('Votes:', response.data.listVotes.items);
+            localStorage.setItem('allVotes', JSON.stringify(response.data.listVotes.items))
             if (response.data && response.data.listVotes && response.data.listVotes.items) {
                 // Aggregating votes by country and summing their points
                 const votes = response.data.listVotes.items;

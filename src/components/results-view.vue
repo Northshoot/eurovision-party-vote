@@ -14,7 +14,14 @@
     <div v-if="winner" class="winner">
       <h2>Winner: {{ winner.country }} with {{ winner.points }} points!</h2>
     </div>
-<!---->
+      <div v-if="winnerGuesses.length" class="flashy-container">
+        <h2>The all knowing:</h2>
+        <ul>
+          <li v-for="name in winnerGuesses" :key="name" class="flashy-item">
+            {{ name }}
+          </li>
+        </ul>
+      </div>
 
     <div v-if="runnersUp.length" class="runners-up">
       <h3>Runners Up:</h3>
@@ -39,7 +46,7 @@
 import { mapActions, mapState } from 'vuex';
 import { Amplify} from "aws-amplify";
 import awsconfig from "@/amplifyconfiguration.json";
-import { listWinners } from '@/graphql/queries';
+import {getUser, listWinners} from '@/graphql/queries';
 import {generateClient} from "aws-amplify/api";
 Amplify.configure(awsconfig);
 const client = generateClient();
@@ -48,7 +55,8 @@ export default {
   name: 'VoteResults',
   data() {
     return {
-      showConfetti: true  // Control the display of confetti
+      showConfetti: true,  // Control the display of confetti
+      winnerGuesses: []
     };
   },
   computed: {
@@ -92,8 +100,46 @@ export default {
         }
       });
       console.log('Winners:', getWinners.data.listWinners.items);
-      console.log(this.sortedVotes)
-    }
+      const winners = getWinners.data.listWinners.items;
+      const allVotesString = localStorage.getItem('allVotes');
+      const allVotes = JSON.parse(allVotesString);
+      const firstPlaceCountries = new Set(
+          winners.filter(winner => winner.place === 1).map(winner => winner.country)
+      );
+      const topVotes = allVotes.filter(vote =>
+          vote.points === 12 && firstPlaceCountries.has(vote.country)
+      );
+      const uniqueTopVotes = this.removeDuplicateUsers(topVotes);
+      console.log('top votes: ', uniqueTopVotes);
+      for (let vote of uniqueTopVotes) {
+        if (!vote.userId) {
+          continue;  // Skip this iteration if no userId is found.
+        }
+        try {
+          const input = {
+            id: vote.userId
+          };
+          console.log('Fetching user:', input);
+          const response = await client.graphql({
+            query: getUser,
+            variables: {id: vote.userId}
+          });
+          this.winnerGuesses.push(response.data.getUser.name);
+        } catch (error) {
+          console.error('Error fetching user:', error);
+        }
+      }
+    },
+    removeDuplicateUsers(votes) {
+    const uniqueUsers = {};
+    votes.forEach(vote => {
+      if (!uniqueUsers[vote.userId]) {
+        uniqueUsers[vote.userId] = vote;
+      }
+    });
+  // Convert the values of the uniqueUsers object back into an array
+  return Object.values(uniqueUsers);
+}
   },
   mounted() {
     this.fetchVotes();
@@ -190,5 +236,36 @@ export default {
 }
 .confetti-piece:nth-child(4n) {
   background-color: #44ff44;
+}
+.flashy-container {
+  padding: 10px;
+  background: linear-gradient(to right, #ff6ec4, #7873f5);
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  margin: 20px;
+}
+
+.flashy-item {
+  font-size: 2em;
+  color: white;
+  list-style-type: none;
+  animation: fadeIn 4s ease-out;
+  margin: 5px 0;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Additional global styles for animations */
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  }
+  100% {
+    text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
 }
 </style>
