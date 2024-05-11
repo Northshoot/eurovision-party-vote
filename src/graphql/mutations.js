@@ -256,3 +256,51 @@ export const deleteVote = /* GraphQL */ `
     }
   }
 `;
+export const createWinner = /* GraphQL */ `
+  mutation CreateWinner(
+    $input: CreateWinnerInput!
+    $condition: ModelWinnerConditionInput
+  ) {
+    createWinner(input: $input, condition: $condition) {
+      id
+      country
+      place
+      partyId
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateWinner = /* GraphQL */ `
+  mutation UpdateWinner(
+    $input: UpdateWinnerInput!
+    $condition: ModelWinnerConditionInput
+  ) {
+    updateWinner(input: $input, condition: $condition) {
+      id
+      country
+      place
+      partyId
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteWinner = /* GraphQL */ `
+  mutation DeleteWinner(
+    $input: DeleteWinnerInput!
+    $condition: ModelWinnerConditionInput
+  ) {
+    deleteWinner(input: $input, condition: $condition) {
+      id
+      country
+      place
+      partyId
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;

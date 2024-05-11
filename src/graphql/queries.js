@@ -140,6 +140,40 @@ export const listVotes = /* GraphQL */ `
     }
   }
 `;
+export const getWinner = /* GraphQL */ `
+  query GetWinner($id: ID!) {
+    getWinner(id: $id) {
+      id
+      country
+      place
+      partyId
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const listWinners = /* GraphQL */ `
+  query ListWinners(
+    $filter: ModelWinnerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listWinners(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        country
+        place
+        partyId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
 export const usersByPartyIdAndId = /* GraphQL */ `
   query UsersByPartyIdAndId(
     $partyId: ID!
@@ -226,6 +260,37 @@ export const votesByPartyIdAndId = /* GraphQL */ `
         partyId
         country
         points
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const winnersByPartyIdAndId = /* GraphQL */ `
+  query WinnersByPartyIdAndId(
+    $partyId: ID!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelWinnerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    winnersByPartyIdAndId(
+      partyId: $partyId
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        country
+        place
+        partyId
         createdAt
         updatedAt
         __typename

@@ -2,13 +2,15 @@
   <div>
 
     <div> <alert-box ref="alertBox" /></div>
-    <div class="welcome-message">
-      <h1>Welcome to the Eurovision Voting App</h1>
-      <p>Welcome, {{ userName }} from party {{ partyName }}! Please vote for your favorite countries.</p>
-      <button @click="submitVotes">Cast your spell</button>
-    </div>
-
     <div class="list-container">
+      <div class="welcome-message">
+        <h1>Welcome to the Eurovision Voting</h1>
+        <p>Welcome, {{ userData.name }} to party <strong> {{ userData.party.name }} </strong>! Please vote for your favorite countries.</p>
+        <div class="info-box">
+          <p>You have a total of <strong>10 votes</strong> to distribute, with values ranging from <strong>12, 10 and 8 to 1 point</strong>. Each value can be assigned only once, so choose carefully when casting your votes.</p>
+        </div>
+        <button @click="submitVotes">Cast your spell</button>
+      </div>
       <div class="country-item" v-for="country in sortedCountries" :key="country.id">
         <div class="country-info">
           <img :src="country.flag_url" alt="Flag" class="country-flag">
@@ -18,9 +20,6 @@
           </div>
         </div>
         <div class="links">
-          <a :href="country.YouTube_url" target="_blank" class="icon-youtube">
-            <font-awesome-icon :icon="['fab', 'youtube']" />
-          </a>
           <a :href="country.more" target="_blank" class="icon-eurovision">
             <font-awesome-icon :icon="['fas', 'globe-europe']" />
           </a>
@@ -57,12 +56,10 @@ export default {
   data() {
     return {
       // Placeholder values that will be replaced with actual route parameters
-      userName: '',
-      partyName: '',
-      userID: '',
       countries: this.generateIds(jsonData),
       availableVotes: [12, 10, 8, 7, 6, 5, 4, 3, 2, 1],
-      votes: []
+      votes: [],
+      userData: this.getUserData()
     };
   },
   computed: {
@@ -70,12 +67,15 @@ export default {
       return [...this.countries].sort((a, b) => b.votes - a.votes);
     }
   },
-  mounted() {
-    // Accessing route query parameters
-    this.userName = this.$route.query.userName || 'Unknown User';
-    this.partyName = this.$route.query.partyId || 'Unknown Party';
-  },
   methods: {
+    getUserData() {
+      const userDataString = localStorage.getItem('userData');
+      if (userDataString) {
+        return JSON.parse(userDataString);
+      } else {
+        return {}; // Return an empty object if nothing is in local storage
+      }
+    },
     generateIds(data) {
       console.log('Generating IDs for countries:', data.length);
       return data.map((country, index) => {
@@ -101,39 +101,47 @@ export default {
       }
     },
     async submitVotes() {
-      const storedUserData = localStorage.getItem('userData');
-      const user = storedUserData ? JSON.parse(storedUserData) : null;
       const voted = localStorage.getItem('voted');
-      this.userID = user ? user.id : null;
+
       if(voted) {
         this.$refs.alertBox.show("You already voted !");
         console.log('You already voted');
-        this.$router.push({name: 'Results', query: {partyId: this.partyId}});
+        this.$router.push({name: 'Results'});
         return;
       }
-      for (let vote of this.votes) {
-        try {
-          const voteInput = {
-            userId: this.userID,    // Ensure you have the userId stored in your component data
-            partyId: this.partyName,  // The partyId should be set when the party is started
-            country: vote.country,
-            points: vote.points
-          };
-          const response = await client.graphql({
-            query: createVote,  // Make sure the createVote is imported if it's defined externally
-            variables: { input: voteInput }
-          });
-          localStorage.setItem('voted', "true");
-          localStorage.setItem('votedData', JSON.stringify(response.data.createVote));
-          this.showConfetti = true; // Start confetti animation
-          this.$router.push({ name: 'Results', query: { partyId: this.partyName } });
-
-        } catch (error) {
-          console.error('Error submitting vote:', error);
+      try {
+        const partyId = this.userData.party.id;
+        const userId= this.userData.id;
+        console.log('Party ID:', partyId)
+        if (!partyId) {
+          console.error('No party found with that name');
+          return;
         }
+        for (let vote of this.votes) {
+          try {
+            const voteInput = {
+              userId: userId,    // Ensure you have the userId stored in your component data
+              partyId: partyId,  // The partyId should be set when the party is started
+              country: vote.country,
+              points: vote.points
+            };
+            const response = await client.graphql({
+              query: createVote,  // Make sure the createVote is imported if it's defined externally
+              variables: {input: voteInput}
+            });
+            localStorage.setItem('voted', "true");
+            localStorage.setItem('votedData', JSON.stringify(response.data.createVote));
+            this.showConfetti = true; // Start confetti animation
+            this.$router.push({name: 'Results'});
+
+          } catch (error) {
+            console.error('Error submitting vote:', error);
+          }
+        }
+      }catch (error) {
+        console.error('Error fetching party ID:', error);
       }
     }
-
   }
 
 };
@@ -202,7 +210,7 @@ export default {
 }
 
 .links a {
-  color: #c00;
+  color: cornflowerblue;
   margin-right: 10px;
   font-size: 24px;
 }
@@ -210,6 +218,18 @@ export default {
 .icon-eurovision {
   color: cornflowerblue;
 }
+.info-box {
+  padding: 20px;
+  margin: 20px;
+  background-color: #f3f4f6; /* Light grey background */
+  border-left: 5px solid #2c3e50; /* Dark blue highlight */
+  font-family: Arial, sans-serif;
+  color: #333;
+}
 
+.info-box p {
+  font-size: 16px; /* Slightly larger text for readability */
+  line-height: 1.6; /* Improved line spacing */
+}
 </style>
 

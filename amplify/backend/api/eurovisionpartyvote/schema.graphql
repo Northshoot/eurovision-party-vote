@@ -34,8 +34,9 @@ type Vote @model {
   updatedAt: AWSDateTime!
 }
 
-type Winner {
+type Winner @model {
   id: ID!
   country: String!
   place: Int!
+  partyId: ID! @index(name: "byParty", sortKeyFields: ["id"])
 }

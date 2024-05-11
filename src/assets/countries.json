@@ -1,13 +1,5 @@
 [
   {
-    "country": "Albania",
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/3/36/Flag_of_Albania.svg",
-    "artist_name": "BESA",
-    "YouTube_url": "https://www.youtube.com/watch?v=SxTYjptEzZs",
-    "song_name": "TITAN",
-    "more": "https://eurovision.tv/participant/besa-2024"
-  },
-  {
     "country": "Armenia",
     "flag_url": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Flag_of_Armenia.svg",
     "artist_name": "LADANIVA",
@@ -16,36 +8,12 @@
     "more": "https://eurovision.tv/participant/ladaniva-2024"
   },
   {
-    "country": "Australia",
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Flag_of_Australia.svg",
-    "artist_name": "Electric Fields",
-    "YouTube_url": "https://www.youtube.com/watch?v=egtuna4Ctgg",
-    "song_name": "One Milkali (One Blood)",
-    "more": "https://eurovision.tv/participant/electric-fields-2024"
-  },
-  {
     "country": "Austria",
     "flag_url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Flag_of_Austria.svg",
     "artist_name": "Kaleen",
     "YouTube_url": "https://www.youtube.com/watch?v=FozVCbIyWyA",
     "song_name": "We Will Rave",
     "more": "https://eurovision.tv/participant/kaleen-2024"
-  },
-  {
-    "country": "Azerbaijan",
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Flag_of_Azerbaijan.svg",
-    "artist_name": "FAHREE feat. Ilkin Dovlatov",
-    "YouTube_url": "https://www.youtube.com/watch?v=1La4QzGeaaQ",
-    "song_name": "Özünlə Apar",
-    "more": "https://eurovision.tv/participant/fahree-ilkin-dovlatov-2024"
-  },
-  {
-    "country": "Belgium",
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/6/65/Flag_of_Belgium.svg",
-    "artist_name": "Mustii",
-    "YouTube_url": "https://www.youtube.com/watch?v=xlG17C19nYo",
-    "song_name": "Before the Party's Over",
-    "more": "https://eurovision.tv/participant/mustii-2024"
   },
   {
     "country": "Croatia",
@@ -62,22 +30,6 @@
     "YouTube_url": "https://www.youtube.com/watch?v=Nt-aFKlWnqk",
     "song_name": "Liar",
     "more": "https://eurovision.tv/participant/silia-kapsis-2024"
-  },
-  {
-    "country": "Czechia",
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Czech_Republic.svg",
-    "artist_name": "Aiko",
-    "YouTube_url": "https://www.youtube.com/watch?v=8KpKc3C9V3w",
-    "song_name": "Pedestal",
-    "more": "https://eurovision.tv/participant/aiko-2024"
-  },
-  {
-    "country": "Denmark",
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Denmark.svg",
-    "artist_name": "SABA",
-    "YouTube_url": "https://www.youtube.com/watch?v=iRYvuS9OxdA",
-    "song_name": "SAND",
-    "more": "https://eurovision.tv/participant/saba-2024"
   },
   {
     "country": "Estonia",
@@ -128,14 +80,6 @@
     "more": "https://eurovision.tv/participant/marina-satti-2024"
   },
   {
-    "country": "Iceland",
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Flag_of_Iceland.svg",
-    "artist_name": "Hera Björk",
-    "YouTube_url": "https://www.youtube.com/watch?v=MBOSPdQ-5pE",
-    "song_name": "Scared of Heights",
-    "more": "https://eurovision.tv/participant/hera-bjork-2024"
-  },
-  {
     "country": "Ireland",
     "flag_url": "https://upload.wikimedia.org/wikipedia/commons/4/45/Flag_of_Ireland.svg",
     "artist_name": "Bambie Thug",
@@ -184,22 +128,6 @@
     "more": "https://eurovision.tv/participant/tali-2024"
   },
   {
-    "country": "Malta",
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Malta.svg",
-    "artist_name": "Sarah Bonnici",
-    "YouTube_url": "https://www.youtube.com/watch?v=uQIv8Vo9_Jc",
-    "song_name": "Loop",
-    "more": "https://eurovision.tv/participant/sarah-bonnici-2024"
-  },
-  {
-    "country": "Moldova",
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/2/27/Flag_of_Moldova.svg",
-    "artist_name": "Natalia Barbu",
-    "YouTube_url": "https://www.youtube.com/watch?v=Pqaxe5o2Apo",
-    "song_name": "In The Middle",
-    "more": "https://eurovision.tv/participant/natalia-barbu-2024"
-  },
-  {
     "country": "Netherlands",
     "flag_url": "https://upload.wikimedia.org/wikipedia/commons/2/20/Flag_of_the_Netherlands.svg",
     "artist_name": "Joost Klein",
@@ -216,28 +144,12 @@
     "more": "https://eurovision.tv/participant/gate-2024"
   },
   {
-    "country": "Poland",
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/1/12/Flag_of_Poland.svg",
-    "artist_name": "LUNA",
-    "YouTube_url": "https://www.youtube.com/watch?v=xi6r3hZe5Tg",
-    "song_name": "The Tower",
-    "more": "https://eurovision.tv/participant/luna-2024"
-  },
-  {
     "country": "Portugal",
     "flag_url": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Portugal.svg",
     "artist_name": "iolanda",
     "YouTube_url": "https://www.youtube.com/watch?v=fWNaR-rxAic",
     "song_name": "Grito",
     "more": "https://eurovision.tv/participant/iolanda-2024"
-  },
-  {
-    "country": "San Marino",
-    "flag_url": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Flag_of_San_Marino.svg",
-    "artist_name": "MEGARA",
-    "YouTube_url": "https://www.youtube.com/watch?v=a5uQMwRMHcs",
-    "song_name": "11:11",
-    "more": "https://eurovision.tv/participant/megara-2024"
   },
   {
     "country": "Serbia",

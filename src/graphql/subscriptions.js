@@ -229,3 +229,42 @@ export const onDeleteVote = /* GraphQL */ `
     }
   }
 `;
+export const onCreateWinner = /* GraphQL */ `
+  subscription OnCreateWinner($filter: ModelSubscriptionWinnerFilterInput) {
+    onCreateWinner(filter: $filter) {
+      id
+      country
+      place
+      partyId
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateWinner = /* GraphQL */ `
+  subscription OnUpdateWinner($filter: ModelSubscriptionWinnerFilterInput) {
+    onUpdateWinner(filter: $filter) {
+      id
+      country
+      place
+      partyId
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteWinner = /* GraphQL */ `
+  subscription OnDeleteWinner($filter: ModelSubscriptionWinnerFilterInput) {
+    onDeleteWinner(filter: $filter) {
+      id
+      country
+      place
+      partyId
+      createdAt
+      updatedAt
+      __typename
+    }
+  }
+`;

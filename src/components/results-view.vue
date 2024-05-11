@@ -14,6 +14,8 @@
     <div v-if="winner" class="winner">
       <h2>Winner: {{ winner.country }} with {{ winner.points }} points!</h2>
     </div>
+<!---->
+
     <div v-if="runnersUp.length" class="runners-up">
       <h3>Runners Up:</h3>
       <ul>
@@ -35,6 +37,12 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import { Amplify} from "aws-amplify";
+import awsconfig from "@/amplifyconfiguration.json";
+import { listWinners } from '@/graphql/queries';
+import {generateClient} from "aws-amplify/api";
+Amplify.configure(awsconfig);
+const client = generateClient();
 
 export default {
   name: 'VoteResults',
@@ -58,7 +66,7 @@ export default {
       return this.sortedVotes[0] || null;
     },
     runnersUp() {
-      return this.sortedVotes.slice(1, 3);
+      return this.sortedVotes.slice(1, 2);
     },
     others() {
       return this.sortedVotes.slice(3);
@@ -69,11 +77,27 @@ export default {
     getRandomColor() {
       const colors = ['#ffcc00', '#ff44cc', '#44ccff', '#44ff44'];
       return colors[Math.floor(Math.random() * colors.length)];
+    },
+    async fetchUsersWhoGuessedCorrectly() {
+      const partyId = localStorage.getItem('partyId')
+      const getWinners =  await client.graphql({
+        query: listWinners,
+        variables: {
+          filter: {
+            partyId: {
+              eq: partyId
+            }
+          },
+          limit: 100 // Optional: adjust based on your needs
+        }
+      });
+      console.log('Winners:', getWinners.data.listWinners.items);
+      console.log(this.sortedVotes)
     }
   },
   mounted() {
-    // Directly call fetchVotes from the votes module with the partyId from URL parameters
-    this.fetchVotes(this.$route.params.partyId);
+    this.fetchVotes();
+    this.fetchUsersWhoGuessedCorrectly();
     setTimeout(() => {
       this.showConfetti = false;  // Stop showing confetti after 10 seconds
     }, 60000);  // 10000 milliseconds = 10 seconds

@@ -39,7 +39,7 @@ export default {
         const newUser = await client.graphql({query: createUser, variables: {input: userData}});
         console.log('Created user:', newUser);
         localStorage.setItem('userData', JSON.stringify(newUser.data.createUser));
-        this.$router.push({name: 'Voting', query: {userName: this.userName, partyId: this.partyId}});
+        this.$router.push({name: 'Voting', query: {userName: this.userName}});
       } catch (error) {
         console.error('Error joining party:', error);
       }

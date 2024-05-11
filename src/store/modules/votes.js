@@ -18,7 +18,8 @@ const mutations = {
     }
 };
 const actions =  {
-    async fetchVotes({ commit }, partyId) {
+    async fetchVotes({ commit }) {
+        const partyId = localStorage.getItem('partyId')
         try {
             // Ensure your GraphQL query accepts a filter for partyId
             const response = await client.graphql({
@@ -29,7 +30,7 @@ const actions =  {
                             eq: partyId // Using equality condition to match the partyId
                         }
                     },
-                    limit: 100 // Optional: adjust based on your needs
+                    limit: 1000 // Optional: adjust based on your needs
                 }
             });
             console.log('Votes:', response.data.listVotes.items);
